@@ -2,16 +2,13 @@
 using VTMCLI.Model;
 using System.Diagnostics;
 using Newtonsoft.Json;
-
+using VTMCLI.Text;
+using Terminal.Gui;
 
 namespace VTMCLI
 {
     class Program
     {
-        enum HelpType
-        {
-            Main = 0, Search = 1
-        }
         private static string _version = "1.0alpha";
         public static string Version { get { return _version; } }
         public async static Task Main(string[] args)
@@ -39,20 +36,25 @@ namespace VTMCLI
             }
             else
             {
-                CliInit();
+                GuiInit();
             }
         }
-        public static void CliInit()
+        public static void GuiInit()
         {
+            Application.Init();
+            MessageBox.Query(50, 7,
+            "Alert", "Do you like console apps?", "Yes", "No");
 
+            Application.Shutdown();
         }
         public static void GetVersion()
         {
             Console.WriteLine("VTM-CLI " + Version);
         }
+        static HelpText Ht = new HelpText();
         public static void GetHelp(int page = 0, int type = 0)
         {
-
+            Console.WriteLine(Ht.MainHelpText);
         }
         public static async Task SearchInit(string[] args)
         {
@@ -128,31 +130,36 @@ namespace VTMCLI
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.ToString());
-                    Console.WriteLine("Check your arguments");
+                    Console.WriteLine("Check your option");
                 }
             }
-            switch(type){
+            switch (type)
+            {
                 case SearchType.song:
                     var a = await Search<SearchResultModel.Song>(arguments);
-                    foreach(var data in a.Data){
+                    foreach (var data in a.Data)
+                    {
                         Console.WriteLine(data.name);
                     }
                     break;
                 case SearchType.artist:
                     var b = await Search<SearchResultModel.Artist>(arguments);
-                    foreach(var data in b.Data){
+                    foreach (var data in b.Data)
+                    {
                         Console.WriteLine(data.name.origin);
                     }
                     break;
                 case SearchType.playlist:
                     var c = await Search<SearchResultModel.Playlist>(arguments);
-                    foreach(var data in c.Data){
+                    foreach (var data in c.Data)
+                    {
                         Console.WriteLine(data.name);
                     }
                     break;
                 case SearchType.user:
                     var d = await Search<SearchResultModel.User>(arguments);
-                    foreach(var data in d.Data){
+                    foreach (var data in d.Data)
+                    {
                         Console.WriteLine(data.nickname);
                     }
                     break;
@@ -168,7 +175,7 @@ namespace VTMCLI
             }
             catch (IndexOutOfRangeException e)
             {
-                Console.WriteLine("Lack of arguments.\n Usage:vtmcli -s <Keywords> [Options]");
+                Console.WriteLine("Lack of arguments.\n Usage:vtmcli search <Keywords> [options]");
                 Debug.WriteLine("Details:" + e.Message);
             }
             return JsonConvert.DeserializeObject<SearchResultModel.Root<T>>(json, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
