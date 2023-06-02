@@ -10,7 +10,7 @@ namespace VTMCLI.Model
             public string en { get; set; }
         }
 
-        public class Artists
+        public class Artist
         {
 
             public string id { get; set; }
@@ -34,7 +34,7 @@ namespace VTMCLI.Model
             public int shareCount { get; set; }
         }
 
-        public class Data
+        public class Song
         {
             public string id { get; set; }
             public string name { get; set; }
@@ -44,14 +44,68 @@ namespace VTMCLI.Model
             public bool like { get; set; }
             public int time { get; set; }
             public double duration { get; set; }
-            public List<Artists> artists { get; set; }
+            public List<Artist> artists { get; set; }
             public Statis statis { get; set; }
         }
 
-        public class Root
+        public class Playlist
+        {
+            public string id { get; set; }
+            public string name { get; set; }
+            public int status { get; set; }
+            public int userId { get; set; }
+            public int createTime { get; set; }
+            public int updateTime { get; set; }
+            public int subscribedCount { get; set; }
+            public string coverImgUrl { get; set; }
+            public int coverImgId { get; set; }
+            public string description { get; set; }
+            public string tags { get; set; }
+            public int playCount { get; set; }
+            public int trackUpdateTime { get; set; }
+            public User creator { get; set; }
+            public string subscribers { get; set; }
+            public bool subscribed { get; set; }
+            public int privacy { get; set; }
+            public string recommendInfo { get; set; }
+            public int shareCount { get; set; }
+            public int commentCount { get; set; }
+            public bool like { get; set; }
+            public int trackCount { get; set; }
+        }
+
+        public class User
+        {
+
+            public string userId { get; set; }
+            public int userType { get; set; }
+            public string nickname { get; set; }
+            public int avatarImgId { get; set; }
+            public string avatarUrl { get; set; }
+            public int backgroundImgId { get; set; }
+            public string backgroundUrl { get; set; }
+            public string level { get; set; }
+            public string experience { get; set; }
+            public string nextexperience { get; set; }
+            public string signature { get; set; }
+            public int createTime { get; set; }
+            public string userName { get; set; }
+            public int accountType { get; set; }
+            public int birthday { get; set; }
+            public int gender { get; set; }
+            public int authStatus { get; set; }
+            public string description { get; set; }
+            public bool followed { get; set; }
+            public bool allfollowed { get; set; }
+            public int followeds { get; set; }
+            public int fans { get; set; }
+            public string remarkName { get; set; }
+        }
+
+        public class Root<T>
         {
             public int Total { get; set; }
-            public List<Data> Data { get; set; }
+            public List<T> Data { get; set; }
             public bool Success { get; set; }
             public int ErrorCode { get; set; }
             public string Msg { get; set; }
